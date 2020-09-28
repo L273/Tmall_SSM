@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+       <!--自己写的插件，避免生成重复的代码插件-->
+        <plugin type="com.ddd.tmall.util.OverIsMergeablePlugin"></plugin>
+
+        <!--阻止生成的代码里显示注释-->
+        <commentGenerator>
+            <!--阻止生成注释带有时间戳-->
+            <property name="suppressDate" value="true"></property>
+            <!--阻止生成注释-->
+            <property name="suppressAllComments" value="true"></property>
+        </commentGenerator>
+
+        <!--设置数据库的连接初始化-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1/tmall_ssm"
+                        userId="root" password="admin"></jdbcConnection>
+
+        <!--该属性可以控制是否强制DECIMAL和NUMERIC类型的字段转换为Java类型的java.math.BigDecimal-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"></property>
+        </javaTypeResolver>
+
+        <!--生成的POJO的位置-->
+        <javaModelGenerator targetPackage="com.ddd.tmall.pojo" targetProject="src/main/java">
+            <!--如果true，MBG会根据catalog和schema来生成子包-->
+            <!--即根据数据库来生成pojo-->
+            <property name="enableSubPackages" value="true"></property>
+
+            <!--对数据库查询的结果做去空格的处理-->
+            <property name="trimStrings" value="true"></property>
+        </javaModelGenerator>
+
+        <!--生成的XML的位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <!--如果true，MBG会根据catalog和schema来生成子包-->
+            <!--即根据数据库来生成xml-->
+            <property name="enableSubPackages" value="true"></property>
+        </sqlMapGenerator>
+
+        <!--生成的mapper存放的位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ddd.tmall.mapper" targetProject="src/main/java">
+            <!--如果true，MBG会根据catalog和schema来生成子包-->
+            <!--即根据数据库来生成mapper-->
+            <property name="enableSubPackages" value="true"></property>
+        </javaClientGenerator>
+
+        <!--生成对应表及类名-->
+        <!--主要是把一些啰嗦的Example去掉-->
+        <table tableName="category" domainObjectName="Category"
+            enableCountByExample="false" enableDeleteByExample="false"
+            enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="property" domainObjectName="Property"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="propertyvalue" domainObjectName="PropertyValue"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="product" domainObjectName="Product"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="productimage" domainObjectName="ProductImage"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="user" domainObjectName="User"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="review" domainObjectName="Review"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="order_" domainObjectName="Order"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="orderitem" domainObjectName="OrderItem"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+
+        <table tableName="user_" domainObjectName="User"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableUpdateByExample="false" enableSelectByExample="true"
+               selectByPrimaryKeyQueryId="true">
+
+            <!--使用自增长键-->
+            <property name="my.isgen.usekeys" value="true"></property>
+
+            <!--使用表内源列名，不适用驼峰显示-->
+            <property name="useActualColumnNames" value="true"></property>
+
+            <!--定义主键-->
+            <generatedKey column="id" sqlStatement="JDBC"></generatedKey>
+        </table>
+    </context>
+</generatorConfiguration>

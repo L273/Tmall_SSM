@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+    <context:annotation-config></context:annotation-config>
+    <context:component-scan base-package="com.ddd.tmall.service"></context:component-scan>
+
+    <!--导入数据库的配置文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+
+    <!--配置数据库的连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!--配置一些基本的属性，数据库，URL-->
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+
+        <!--配置连接池的大小，初始的大小，最小，最大-->
+        <property name="initialSize" value="10"></property>
+        <property name="minIdle" value="5"></property>
+        <property name="maxActive" value="20"></property>
+
+        <!--获取连接的等待时间-->
+        <property name="maxWait" value="60000"></property>
+
+        <!--关闭空闲连接的等待时间-->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+
+        <!--配置一个连接池在池中最小生存时间，单位毫秒-->
+        <property name="minEvictableIdleTimeMillis" value="300000"></property>
+
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="20" />
+    </bean>
+
+    <!--配置MyBatis的SessionFactory-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--导入pojo下的全部全部pojo-->
+        <property name="typeAliasesPackage" value="com.ddd.tmall.pojo"></property>
+
+        <!--指定使用的数据库-->
+        <property name="dataSource" ref="dataSource"></property>
+
+        <!--将resources中mapper下的xml全部导入-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
+        
+        <property name="plugins">
+            <array>
+                <!--导入一个分页的插件-->
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value></value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!--对java源代码文档内的mapper中接口进行识别-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.ddd.tmall.mapper"></property>
+    </bean>
+
+
+    <!--增加事物管理的bean-->
+    <!--由于生成表单的时候，需要同时更新OrderItem以及Order表单。-->
+    <!--若出现突然情况，需要事物回滚来防止数据库的数据更新-->
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!--调用配置好的bean-->
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+</beans>
